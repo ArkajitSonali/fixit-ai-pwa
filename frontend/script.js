@@ -1,4 +1,4 @@
-const API_URL = "/api/explain";
+const API_URL = "https://fixit-ai-pwa.onrender.com/explain";
 
 // DOM Elements
 const errorMsgInput = document.getElementById("error-message");
@@ -77,7 +77,7 @@ explainBtn.addEventListener("click", async () => {
 
         renderResult(data);
         saveHistory({ errorMsg, codeSnippet, result: data });
-        
+
     } catch (err) {
         console.error(err);
         showError(err.message);
@@ -107,7 +107,7 @@ function renderResult(data) {
     // Badges
     badgeLanguage.innerText = data.language || "Unknown";
     badgeType.innerText = data.error_type || "Error";
-    
+
     badgeSeverity.innerText = data.severity || "Unknown";
     badgeSeverity.className = "badge"; // reset class
     const sev = (data.severity || "").toLowerCase();
@@ -179,7 +179,7 @@ function updateHistoryUI() {
         // Title logic: Use error msg if exists, otherwise a snippet of code
         const title = item.errorMsg ? item.errorMsg : (item.codeSnippet.substring(0, 30) + "...");
         li.innerText = title || "Unknown Error";
-        
+
         li.addEventListener("click", () => {
             errorMsgInput.value = item.errorMsg;
             codeSnippetInput.value = item.codeSnippet;
