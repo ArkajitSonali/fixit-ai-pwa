@@ -6,7 +6,7 @@ import google.generativeai as genai
 
 app = FastAPI()
 
-# This allows your Vercel frontend to talk to this Render backend
+# Enable CORS so Vercel can talk to Render
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -15,8 +15,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Set up Gemini
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+# Configure Gemini
+api_key = os.getenv("GEMINI_API_KEY")
+genai.configure(api_key=api_key)
 model = genai.GenerativeModel('gemini-1.5-flash')
 
 class ErrorRequest(BaseModel):
@@ -25,10 +26,13 @@ class ErrorRequest(BaseModel):
 
 @app.post("/explain")
 async def explain_error(request: ErrorRequest):
-    prompt = f"Explain this error: {request.error_message}\nCode: {request.code_snippet}"
-    response = model.generate_content(prompt)
-    return {"explanation": response.text}
+    try:
+        prompt = f"Explain this error briefly and suggest a fix:\nError: {request.error_message}\nCode: {request.code_snippet}"
+        response = model.generate_content(prompt)
+        return {"explanation": response.text}
+    except Exception as e:
+        return {"explanation": f"AI Error: {str(e)}"}
 
 @app.get("/")
 async def root():
-    return {"message": "Backend is running!"}
+    return {"message": "DebugAI Backend is Live!"}
