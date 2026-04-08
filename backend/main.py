@@ -17,7 +17,7 @@ app.add_middleware(
 # Configure Gemini
 api_key = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=api_key)
-model = genai.GenerativeModel('gemini-pro')
+model = genai.GenerativeModel('models/gemini-1.5-flash')
 
 class ErrorRequest(BaseModel):
     error_message: str
