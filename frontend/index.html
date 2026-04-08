@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Debugging Support Tool</title>
+    <!-- Modern Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <span class="emoji">🐞</span>
+                <h1>Debug<span class="accent">AI</span></h1>
+            </div>
+            <p class="subtitle">Your personal AI mentor for decoding and fixing programming errors.</p>
+        </header>
+
+        <main class="main-content">
+            <!-- Left Panel: Input Area -->
+            <section class="input-section glass-panel">
+                <h2>Describe the Issue</h2>
+                
+                <div class="form-group">
+                    <label for="error-message">Error Message</label>
+                    <textarea id="error-message" placeholder="e.g. SyntaxError: unexpected indent" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="code-snippet">Code Snippet (Optional)</label>
+                    <textarea id="code-snippet" class="code-font" placeholder='def func():\nprint("Hello")' rows="8"></textarea>
+                </div>
+
+                <div class="action-buttons">
+                    <button id="clear-btn" class="btn btn-secondary">Clear</button>
+                    <button id="explain-btn" class="btn btn-primary">Explain Error ✨</button>
+                </div>
+
+                <!-- History Section placeholder -->
+                <div class="history-section">
+                    <h3>Recent Errors</h3>
+                    <ul id="history-list">
+                        <!-- History items populated via JS -->
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Right Panel: Output Area -->
+            <section class="output-section glass-panel">
+                <!-- Loading State -->
+                <div id="loading-state" class="state-container hidden">
+                    <div class="spinner"></div>
+                    <p>Analyzing code and generating explanation...</p>
+                </div>
+
+                <!-- Empty State -->
+                <div id="empty-state" class="state-container">
+                    <div class="illustration">🎯</div>
+                    <p>Paste an error or code snippet on the left to get started!</p>
+                </div>
+                
+                <!-- Error State -->
+                <div id="error-state" class="state-container hidden">
+                    <p class="error-text" id="error-alert">An error occurred while fetching the explanation.</p>
+                </div>
+
+                <!-- Results Output -->
+                <div id="result-container" class="result-container hidden">
+                    
+                    <div class="result-header">
+                        <div class="badges">
+                            <span class="badge" id="badge-language">Python</span>
+                            <span class="badge badge-warning" id="badge-type">Syntax Error</span>
+                            <span class="badge badge-danger" id="badge-severity">High</span>
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <h3>Beginner's Explanation</h3>
+                        <p id="out-explanation">...</p>
+                    </div>
+
+                    <div class="result-card did-you-mean hidden" id="card-dym">
+                        <strong>💡 Did you mean?</strong>
+                        <p id="out-dym">...</p>
+                    </div>
+
+                    <div class="result-card">
+                        <h3>Root Cause</h3>
+                        <p id="out-cause">...</p>
+                    </div>
+
+                    <div class="result-card analogy-card">
+                        <h3>🧠 Real-World Analogy</h3>
+                        <p id="out-analogy">...</p>
+                    </div>
+
+                    <div class="result-card">
+                        <h3>Step-by-Step Fixes</h3>
+                        <ol id="out-fixes">
+                        </ol>
+                    </div>
+
+                    <div class="result-card code-card">
+                        <div class="code-header">
+                            <h3>Corrected Code</h3>
+                            <button id="copy-btn" class="btn btn-small">Copy Code</button>
+                        </div>
+                        <pre><code id="out-code" class="code-font"></code></pre>
+                    </div>
+
+                    <div class="result-card tips-card">
+                        <h3>🛡️ Prevention Tips</h3>
+                        <ul id="out-tips">
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
